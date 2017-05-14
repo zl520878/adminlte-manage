@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="adminlte-manage:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="adminlte-manage-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="adminlte-manage:war exploded" />
+    </root>
+  </artifact>
+</component>
