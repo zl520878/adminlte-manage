@@ -56,8 +56,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
 	@Override
 	public Boolean deleteUserById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = new User();
+		user.setId(Long.valueOf(id));
+		userMapper.deleteById(user);
+		return deleteById(user);
 	}
 
 }

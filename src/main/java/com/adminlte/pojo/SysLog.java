@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 
-@TableName("sys_log")
+@TableName("wx_svr_sys_log")
 public class SysLog implements Serializable{
 	
 	@TableId(type = IdType.AUTO)

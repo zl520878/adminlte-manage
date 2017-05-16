@@ -3,8 +3,10 @@ package com.adminlte.pojo;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 
+@TableName("wx_svr_role")
 public class Role implements Serializable {
 
 	@TableId(type = IdType.AUTO)

@@ -49,11 +49,11 @@
         o.id AS roleId,
         o.`name` AS roleName
         FROM
-        user t
-        LEFT JOIN user_role r ON t.id = r.user_id
-        LEFT JOIN role o ON r.role_id = o.id
-        LEFT JOIN organization s ON s.id = t.organization_id
-        LEFT JOIN profile p ON p.user_id = t.id
+        wx_svr_user t
+        LEFT JOIN wx_svr_user_role r ON t.id = r.user_id
+        LEFT JOIN wx_svr_role o ON r.role_id = o.id
+        LEFT JOIN wx_svr_organization s ON s.id = t.organization_id
+        LEFT JOIN wx_svr_profile p ON p.user_id = t.id
         <where>
             t.id = #{id}
         </where>
@@ -78,11 +78,11 @@
         o.id AS roleId,
         o.`name` AS roleName
         FROM
-        user t
-        LEFT JOIN user_role r ON t.id = r.user_id
-        LEFT JOIN role o ON r.role_id = o.id
-        LEFT JOIN organization s ON s.id = t.organization_id
-        LEFT JOIN profile p ON p.user_id = t.id
+        wx_svr_user t
+        LEFT JOIN wx_svr_user_role r ON t.id = r.user_id
+        LEFT JOIN wx_svr_role o ON r.role_id = o.id
+        LEFT JOIN wx_svr_organization s ON s.id = t.organization_id
+        LEFT JOIN wx_svr_profile p ON p.user_id = t.id
         <where>
             <if test=" name != null and name != '' ">
                 t.name = #{name}
@@ -118,11 +118,11 @@
         o.id AS roleId,
         o.`name` AS roleName
         FROM
-        user t
-        LEFT JOIN user_role r ON t.id = r.user_id
-        LEFT JOIN role o ON r.role_id = o.id
-        LEFT JOIN organization s ON s.id = t.organization_id
-        LEFT JOIN profile p ON p.user_id = t.id
+            wx_svr_user t
+        LEFT JOIN wx_svr_user_role r ON t.id = r.user_id
+        LEFT JOIN wx_svr_role o ON r.role_id = o.id
+        LEFT JOIN wx_svr_organization s ON s.id = t.organization_id
+        LEFT JOIN wx_svr_profile p ON p.user_id = t.id
     </select>
 
 </mapper>

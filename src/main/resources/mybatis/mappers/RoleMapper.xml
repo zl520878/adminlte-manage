@@ -11,8 +11,8 @@
         SELECT
             e.resource_id AS id
         FROM
-            role r
-        LEFT JOIN role_resource e ON r.id = e.role_id
+            wx_svr_role r
+        LEFT JOIN wx_svr_role_resource e ON r.id = e.role_id
         WHERE
             r.id = #{id}
     </select>
@@ -33,9 +33,9 @@
             s.resource_type AS resourceType,
             s.create_time AS createTime
         FROM
-            role r
-        LEFT JOIN role_resource e ON r.id = e.role_id
-        LEFT JOIN resource s ON e.resource_id = s.id
+          wx_svr_role r
+        LEFT JOIN wx_svr_role_resource e ON r.id = e.role_id
+        LEFT JOIN wx_svr_resource s ON e.resource_id = s.id
         WHERE
             r.id in  
             <foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
@@ -50,9 +50,9 @@
             e.id AS id,
             s.url AS url
         FROM
-            role r
-        LEFT JOIN role_resource e ON r.id = e.role_id
-        LEFT JOIN resource s ON e.resource_id = s.id
+            wx_svr_role r
+        LEFT JOIN wx_svr_role_resource e ON r.id = e.role_id
+        LEFT JOIN wx_svr_resource s ON e.resource_id = s.id
         WHERE
             r.id = #{id}
     </select>

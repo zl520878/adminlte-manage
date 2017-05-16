@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 
-@TableName("user_role")
+@TableName("wx_svr_user_role")
 public class UserRole implements Serializable {
 	
 	@TableId(type = IdType.AUTO)

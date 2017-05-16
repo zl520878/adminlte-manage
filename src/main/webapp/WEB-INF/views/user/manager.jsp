@@ -328,4 +328,8 @@
 
 
     });
+
+    function showFail(str){
+        console.error(str);
+    }
 </script>

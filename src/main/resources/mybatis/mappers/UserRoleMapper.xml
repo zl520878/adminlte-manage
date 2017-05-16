@@ -10,14 +10,14 @@
     <select id="selectByUserId" resultType="UserRole" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
-        from user_role
+        from wx_svr_user_role
         where user_id = #{userId}
     </select>
 
     <select id="selectRoleIdListByUserId" resultType="java.lang.Long" parameterType="java.lang.Long">
         select 
         role_id AS roleId
-        from user_role
+        from wx_svr_user_role
         where user_id = #{userId}
     </select>
 
