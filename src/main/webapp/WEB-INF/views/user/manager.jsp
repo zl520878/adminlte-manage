@@ -307,9 +307,9 @@
             var data = tables.api().row($(this).parents("tr")).data();
             if (confirm("是否确认删除这条信息?")) {
                 $.ajax({
-                    url: '',
-                    type: 'delete',
-                    dataType: "json",
+                    url: 'delete',
+                    data:data,
+                    type: 'POST',
                     cache: "false",
                     success: function (data) {
                         if (data.status == 1) {
@@ -330,6 +330,6 @@
     });
 
     function showFail(str){
-        console.error(str);
+        console.info(str);
     }
 </script>

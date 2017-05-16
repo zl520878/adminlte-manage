@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>瓜皮烧烤管理后台</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -65,9 +65,9 @@
 <!-- SlimScroll 1.3.0 -->
 <script src="<%=request.getContextPath()%>/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- ChartJS 1.0.1 -->
-<script src="<%=request.getContextPath()%>/plugins/chartjs/Chart.min.js"></script>
+<%--<script src="<%=request.getContextPath()%>/plugins/chartjs/Chart.min.js"></script>--%>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="<%=request.getContextPath()%>/dist/js/pages/dashboard2.js"></script>
+<%--<script src="<%=request.getContextPath()%>/dist/js/pages/dashboard2.js"></script>--%>
 <!-- AdminLTE for demo purposes -->
 <script src="<%=request.getContextPath()%>/dist/js/demo.js"></script>
 </body>

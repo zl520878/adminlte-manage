@@ -65,7 +65,7 @@ public class UserController extends BaseController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public ResponseEntity<Void> queryListByCategoryId(@RequestParam(value = "id") String id) {
 		try {
 			Boolean bool = userService.deleteUserById(id);

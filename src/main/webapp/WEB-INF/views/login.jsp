@@ -19,10 +19,10 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        AdminLTE
+        管理后台
     </div><!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">AdminLTE</p>
+        <p class="login-box-msg">登录页面</p>
         <form id="form_login" action="" method="post">
             <div class="form-group has-feedback">
                 <input name="jg_login_user" type="text" class="form-control" id="userName" placeholder="您的用户名">
