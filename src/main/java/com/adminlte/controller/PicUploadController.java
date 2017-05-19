@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.corba.se.spi.activation.Server;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -23,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.adminlte.result.PicUploadResult;
 import com.adminlte.service.IProfileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 /**
  * 上传管理
@@ -41,10 +46,12 @@ public class PicUploadController extends BaseController{
 	private static final String[] IMAGE_TYPE = new String[] { ".bmp", ".jpg",
 			".jpeg", ".gif", ".png" };
 
+
+
 	@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
 	@ResponseBody
 	public String upload(@RequestParam("imgUp") MultipartFile uploadFile,
-			HttpServletResponse response) throws Exception {
+						 HttpServletResponse response, HttpServletRequest request) throws Exception {
 
 		// 校验图片格式
 		boolean isLegal = false;
@@ -62,12 +69,13 @@ public class PicUploadController extends BaseController{
 		// 状态
 		fileUploadResult.setError(isLegal ? 0 : 1);
 
+		String fileDir = System.getProperty("user.home")+ File.separator + "uploadimages";
+
 		// 文件新路径
 		String filePath = getFilePath(uploadFile.getOriginalFilename());
 
-		// 生成图片的绝对引用地址
-		String picUrl = StringUtils.replace(StringUtils.substringAfter(
-				filePath, "D:\\image\\adminlte-upload"), "\\", "/");
+		// 生成图片的相对引用地址
+		String picUrl = StringUtils.replace(StringUtils.substringAfter(filePath, fileDir), "\\\\", File.separator);
 
 		fileUploadResult.setUrl(picUrl);
 
@@ -104,10 +112,9 @@ public class PicUploadController extends BaseController{
 	}
 
 	private String getFilePath(String sourceFileName) {
-		String baseFolder = "D:\\image\\adminlte-upload" + File.separator
-				+ "images";
 		Date nowDate = new Date();
-		String fileFolder = baseFolder + File.separator
+		String fileDir = System.getProperty("user.home")+ File.separator + "uploadimages";
+		String fileFolder = fileDir + File.separator
 				+ new DateTime(nowDate).toString("yyyy") + File.separator
 				+ new DateTime(nowDate).toString("MM") + File.separator
 				+ new DateTime(nowDate).toString("dd");

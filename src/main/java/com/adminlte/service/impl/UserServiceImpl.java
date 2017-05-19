@@ -58,7 +58,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 	public Boolean deleteUserById(String id) {
 		User user = new User();
 		user.setId(Long.valueOf(id));
-		userMapper.deleteById(user);
 		return deleteById(user);
 	}
 

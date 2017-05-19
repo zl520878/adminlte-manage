@@ -15,5 +15,4 @@ public interface UserMapper extends BaseMapper<User> {
 	User selectUserVoById(@Param("id") Long id);
 
 	List<UserVo> selectUserVo();
-
 }

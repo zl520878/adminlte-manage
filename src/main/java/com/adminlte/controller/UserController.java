@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.adminlte.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,8 @@ import com.adminlte.pojo.vo.UserVo;
 import com.adminlte.result.DatatablesResult;
 import com.adminlte.service.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 /**
  * 用户管理
@@ -57,7 +60,7 @@ public class UserController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(null);
 	}
 	
 	/**
@@ -66,15 +69,18 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public ResponseEntity<Void> queryListByCategoryId(@RequestParam(value = "id") String id) {
+	public ResponseEntity<Map<String,Object>> deleteUserById(@RequestParam(value = "id") String id) {
 		try {
 			Boolean bool = userService.deleteUserById(id);
+			Map<String,Object> rsMap = new HashMap<>();
+			rsMap.put("status",1);
 			if (bool) {
-				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+				return ResponseEntity.ok(rsMap);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(null);
 	}
+
 }

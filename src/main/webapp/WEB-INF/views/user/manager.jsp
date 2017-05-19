@@ -84,15 +84,15 @@
                     <form class="form-horizontal"  id="editForm" action="" method="post">
                         <input type="hidden" class="form-control" name="areaId">
                         <div class="form-group">
-                            <label for="inputName" class="col-sm-3 control-label">姓名</label>
+                            <label for="name" class="col-sm-3 control-label">姓名</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="areaNameCn">
+                                <input id="name" type="text" class="form-control" name="areaNameCn">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputName" class="col-sm-3 control-label">手机</label>
+                            <label for="phone" class="col-sm-3 control-label">手机</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="areaNameEn">
+                                <input id="phone" type="text" class="form-control" name="areaNameEn">
                             </div>
                         </div>
                     </form>
@@ -293,7 +293,7 @@
                 success: function (data) {
                     if (data.status == 1) {
                         $("#editModal").modal("hide");
-                        showSuccess("");
+                        showSuccess("修改记录成功！");
                         tables.fnDraw();
                     } else {
                         showFail("");
@@ -309,11 +309,10 @@
                 $.ajax({
                     url: 'delete',
                     data:data,
-                    type: 'POST',
+                    type: 'post',
                     cache: "false",
                     success: function (data) {
                         if (data.status == 1) {
-                            showSuccess();
                             tables.api().row().remove().draw(false);
                         } else {
                             showFail();
@@ -331,5 +330,9 @@
 
     function showFail(str){
         console.info(str);
+    }
+
+    function showSuccess(tip){
+        alert(tip);
     }
 </script>
