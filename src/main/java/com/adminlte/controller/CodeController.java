@@ -16,7 +16,7 @@ import com.adminlte.commons.utils.CaptchaUtils;
 
 /**
  * 验证码
- * @author wuyudong
+ * @author zhangliang
  *
  */
 @Controller

@@ -30,6 +30,8 @@
                 /rest/login = anon
                 <!-- 获取登录验证码 -->
                 /rest/captcha-image = anon
+				<!-- 对外查询结构允许访问 -->
+				/rest/out/**= anon
                 <!-- 其他资源需要认证 -->
                 /** = authc
                 

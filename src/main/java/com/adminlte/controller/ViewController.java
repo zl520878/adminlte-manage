@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * 视图
- * @author wuyudong
+ * @author zhangliang
  *
  */
 @Controller

@@ -26,7 +26,7 @@ import com.adminlte.shiro.ShiroUser;
 
 /**
  * AOP日志
- * @author wuyudong
+ * @author zhangliang
  *
  */
 @Aspect

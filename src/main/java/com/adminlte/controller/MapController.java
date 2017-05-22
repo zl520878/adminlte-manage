@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 地图管理
- * @author wuyudong
+ * @author zhangliang
  *
  */
 @Controller

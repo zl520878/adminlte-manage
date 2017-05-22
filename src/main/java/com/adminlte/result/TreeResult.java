@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 /**
  * 左侧菜单栏
- * @author wuyudong
+ * @author zhangliang
  *
  */
 public class TreeResult implements Serializable{

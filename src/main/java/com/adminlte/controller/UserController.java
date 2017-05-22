@@ -27,7 +27,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 /**
  * 用户管理
- * @author wuyudong
+ * @author zhangliang
  *
  */
 @Controller

@@ -25,7 +25,7 @@ import com.adminlte.pojo.User;
 
 /**
  * 登录管理
- * @author wuyudong
+ * @author zhangliang
  *
  */
 @Controller

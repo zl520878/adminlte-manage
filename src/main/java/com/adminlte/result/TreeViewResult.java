@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 菜单树
  * 
- * @author wuyudong
+ * @author zhangliang
  *
  */
 public class TreeViewResult {

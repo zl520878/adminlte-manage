@@ -14,7 +14,7 @@ import com.adminlte.service.ISysLogService;
 
 /**
  * 日志管理
- * @author wuyudong
+ * @author zhangliang
  *
  */
 @Controller

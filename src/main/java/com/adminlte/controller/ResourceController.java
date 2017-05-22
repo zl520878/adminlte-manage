@@ -16,7 +16,7 @@ import com.adminlte.shiro.ShiroUser;
 
 /**
  * 权限管理
- * @author wuyudong
+ * @author zhangliang
  *
  */
 @Controller
