@@ -10,6 +10,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.netease.cloud.auth.BasicCredentials;
+import com.netease.cloud.auth.Credentials;
+import com.netease.cloud.services.nos.NosClient;
+import com.netease.cloud.services.nos.model.ObjectMetadata;
 import com.sun.corba.se.spi.activation.Server;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -63,11 +67,36 @@ public class PicUploadController extends BaseController{
 			}
 		}
 
+
 		// 封装Result对象，并且将文件的byte数组放置到result对象中
 		PicUploadResult fileUploadResult = new PicUploadResult();
 
 		// 状态
 		fileUploadResult.setError(isLegal ? 0 : 1);
+
+		//网易蜂巢OSS
+		String endPoint = "http://nos-eastchina1.126.net";
+		String accessKey = "ed6a9afa6f2d4931be9c498b916771ad";
+		String secretKey = "bc4b62305aa14b07869cbfc5f4b08950";
+		Credentials credentials = new BasicCredentials(accessKey, secretKey);
+		NosClient nosClient = new NosClient(credentials);
+		nosClient.setEndpoint(endPoint);
+
+		int streamLength = uploadFile.getInputStream().available();
+		try {
+			ObjectMetadata objectMetadata = new ObjectMetadata();
+			//设置流的长度，你还可以设置其他文件元数据信息
+			objectMetadata.setContentLength(streamLength);
+			nosClient.putObject(
+					"image-zl",
+					uploadFile.getOriginalFilename(),
+					uploadFile.getInputStream(),
+					objectMetadata);
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}
+
+
 
 		String fileDir = System.getProperty("user.home")+ File.separator + "uploadimages";
 
@@ -82,7 +111,7 @@ public class PicUploadController extends BaseController{
 		File newFile = new File(filePath);
 
 		// 写文件到磁盘
-		uploadFile.transferTo(newFile);
+//		uploadFile.transferTo(newFile);
 
 		// 校验图片是否合法
 		isLegal = false;

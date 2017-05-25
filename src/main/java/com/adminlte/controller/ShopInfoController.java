@@ -2,6 +2,10 @@ package com.adminlte.controller;
 
 import com.adminlte.commons.utils.ResponseVo;
 import com.adminlte.service.impl.ShopInfoServiceImpl;
+import com.netease.cloud.auth.BasicCredentials;
+import com.netease.cloud.auth.Credentials;
+import com.netease.cloud.services.nos.NosClient;
+import com.netease.cloud.services.nos.model.ObjectMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,6 +39,13 @@ public class ShopInfoController extends BaseController {
         Map<String, Object> mp = new HashMap<>();
         mp.put("rd_session",request.getSession().getId());
         return ResponseEntity.ok(getResponseData(true, "获取成功！", mp));
+    }
+
+    @RequestMapping(value = "/uploadImage", method = RequestMethod.GET)
+    public ResponseEntity<ResponseVo> uploadImage(HttpServletRequest request){
+
+
+        return ResponseEntity.ok(getResponseData(true, "获取成功！", 11));
     }
 
 }
