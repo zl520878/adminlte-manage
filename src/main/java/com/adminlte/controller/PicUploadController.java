@@ -18,7 +18,10 @@ import com.sun.corba.se.spi.activation.Server;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +35,7 @@ import com.adminlte.service.IProfileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
+import static sun.management.snmp.jvminstr.JvmThreadInstanceEntryImpl.ThreadStateMap.Byte1.other;
 
 /**
  * 上传管理
@@ -41,21 +45,22 @@ import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 @Controller
 @RequestMapping("pic")
 public class PicUploadController extends BaseController{
+
+	Logger logger = LoggerFactory.getLogger(PicUploadController.class);
+
 	private static final ObjectMapper mapper = new ObjectMapper();
-	
+
 	@Autowired
 	private IProfileService profileService;
 
 	// 允许上传的格式
-	private static final String[] IMAGE_TYPE = new String[] { ".bmp", ".jpg",
-			".jpeg", ".gif", ".png" };
+	private static final String[] IMAGE_TYPE = new String[] { ".bmp", ".jpg", ".jpeg", ".gif", ".png" };
 
 
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
 	@ResponseBody
-	public String upload(@RequestParam("imgUp") MultipartFile uploadFile,
-						 HttpServletResponse response, HttpServletRequest request) throws Exception {
+	public String upload(@RequestParam("imgUp") MultipartFile uploadFile, HttpServletRequest request) throws Exception {
 
 		// 校验图片格式
 		boolean isLegal = false;
@@ -74,64 +79,16 @@ public class PicUploadController extends BaseController{
 		// 状态
 		fileUploadResult.setError(isLegal ? 0 : 1);
 
-		//网易蜂巢OSS
-		String endPoint = "http://nos-eastchina1.126.net";
-		String accessKey = "ed6a9afa6f2d4931be9c498b916771ad";
-		String secretKey = "bc4b62305aa14b07869cbfc5f4b08950";
-		Credentials credentials = new BasicCredentials(accessKey, secretKey);
-		NosClient nosClient = new NosClient(credentials);
-		nosClient.setEndpoint(endPoint);
-
-		int streamLength = uploadFile.getInputStream().available();
-		try {
-			ObjectMetadata objectMetadata = new ObjectMetadata();
-			//设置流的长度，你还可以设置其他文件元数据信息
-			objectMetadata.setContentLength(streamLength);
-			nosClient.putObject(
-					"image-zl",
-					uploadFile.getOriginalFilename(),
-					uploadFile.getInputStream(),
-					objectMetadata);
-		}catch (Exception e){
-			System.out.println(e.getMessage());
-		}
-
-
-
-		String fileDir = System.getProperty("user.home")+ File.separator + "uploadimages";
 
 		// 文件新路径
-		String filePath = getFilePath(uploadFile.getOriginalFilename());
+		String filePath = getFilePath(uploadFile,request.getParameter("picType"));
 
-		// 生成图片的相对引用地址
-		String picUrl = StringUtils.replace(StringUtils.substringAfter(filePath, fileDir), "\\\\", File.separator);
 
-		fileUploadResult.setUrl(picUrl);
-
-		File newFile = new File(filePath);
-
-		// 写文件到磁盘
-//		uploadFile.transferTo(newFile);
-
-		// 校验图片是否合法
-		isLegal = false;
-		try {
-			BufferedImage image = ImageIO.read(newFile);
-			if (image != null) {
-				fileUploadResult.setWidth(image.getWidth() + "");
-				fileUploadResult.setHeight(image.getHeight() + "");
-				isLegal = true;
-			}
-		} catch (IOException e) {
-		}
+		fileUploadResult.setUrl(filePath);
 
 		// 状态
 		fileUploadResult.setError(isLegal ? 0 : 1);
 
-		if (!isLegal) {
-			// 不合法，将磁盘上的文件删除
-			newFile.delete();
-		}
 
 		//保存url到数据库
 		profileService.updateImgById(getUserId(), filePath);
@@ -140,22 +97,41 @@ public class PicUploadController extends BaseController{
 		return mapper.writeValueAsString(fileUploadResult);
 	}
 
-	private String getFilePath(String sourceFileName) {
-		Date nowDate = new Date();
-		String fileDir = System.getProperty("user.home")+ File.separator + "uploadimages";
-		String fileFolder = fileDir + File.separator
-				+ new DateTime(nowDate).toString("yyyy") + File.separator
-				+ new DateTime(nowDate).toString("MM") + File.separator
-				+ new DateTime(nowDate).toString("dd");
-		File file = new File(fileFolder);
-		if (!file.isDirectory()) {
-			// 如果目录不存在，则创建目录
-			file.mkdirs();
+	private String getFilePath(MultipartFile uploadFile, String picType) { //picType: 0:店铺logo,1:商品图片
+
+		String filePath;
+		if ("0".equals(picType)) {
+			filePath = "shop-logo";
+		} else if ("1".equals(picType)) {
+			filePath = "goods-img";
+		} else {
+			filePath = "other";
 		}
-		// 生成新的文件名
-		String fileName = new DateTime(nowDate).toString("yyyyMMddhhmmssSSSS")
-				+ RandomUtils.nextInt(100, 9999) + "."
-				+ StringUtils.substringAfterLast(sourceFileName, ".");
-		return fileFolder + File.separator + fileName;
+
+		//网易蜂巢OSS
+
+		String endPoint = "http://nos-eastchina1.126.net";
+		String accessKey = "ed6a9afa6f2d4931be9c498b916771ad";
+		String secretKey = "bc4b62305aa14b07869cbfc5f4b08950";
+		Credentials credentials = new BasicCredentials(accessKey, secretKey);
+		NosClient nosClient = new NosClient(credentials);
+		nosClient.setEndpoint(endPoint);
+
+		try {
+			int streamLength;
+			streamLength = uploadFile.getInputStream().available();
+			ObjectMetadata objectMetadata = new ObjectMetadata();
+			//设置流的长度，你还可以设置其他文件元数据信息
+			objectMetadata.setContentLength(streamLength);
+			nosClient.putObject(
+					filePath,
+					uploadFile.getOriginalFilename(),
+					uploadFile.getInputStream(),
+					objectMetadata);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+
+		return endPoint.split("http://")[0] + filePath + "." + endPoint.split("http://")[1] + "/" + uploadFile.getOriginalFilename();
 	}
 }

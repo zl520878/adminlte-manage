@@ -2,6 +2,7 @@ package com.adminlte.service.impl;
 
 import com.adminlte.mapper.ShopInfoMapper;
 import com.adminlte.pojo.ShopInfo;
+import com.adminlte.service.IShopInfoService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Service
-@Transactional
-public class ShopInfoServiceImpl extends ServiceImpl<ShopInfoMapper, ShopInfo> {
+public class ShopInfoServiceImpl extends ServiceImpl<ShopInfoMapper, ShopInfo> implements IShopInfoService {
 }

@@ -1,11 +1,8 @@
 package com.adminlte.controller;
 
 import com.adminlte.commons.utils.ResponseVo;
-import com.adminlte.service.impl.ShopInfoServiceImpl;
-import com.netease.cloud.auth.BasicCredentials;
-import com.netease.cloud.auth.Credentials;
-import com.netease.cloud.services.nos.NosClient;
-import com.netease.cloud.services.nos.model.ObjectMetadata;
+import com.adminlte.service.IGoodInfoService;
+import com.adminlte.service.IShopInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,11 +23,14 @@ import java.util.Map;
 public class ShopInfoController extends BaseController {
 
     @Autowired
-    ShopInfoServiceImpl shopInfoService;
+    IShopInfoService iShopInfoService;
+
+    @Autowired
+    IGoodInfoService iGoodInfoService;
 
     @RequestMapping(value = "/shopinfo", method = RequestMethod.GET)
     public ResponseEntity<ResponseVo> getShopInfoData(){
-        return ResponseEntity.ok(getResponseData(true, "获取成功！", shopInfoService.selectById(1)));
+        return ResponseEntity.ok(getResponseData(true, "获取成功！", iShopInfoService.selectById(1)));
     }
 
     @RequestMapping(value = "/getUserSession", method = RequestMethod.GET)
@@ -46,6 +46,11 @@ public class ShopInfoController extends BaseController {
 
 
         return ResponseEntity.ok(getResponseData(true, "获取成功！", 11));
+    }
+
+    @RequestMapping(value = "/getGoodsInfo", method = RequestMethod.GET)
+    public ResponseEntity<ResponseVo> getGoodsInfo(HttpServletRequest request){
+        return ResponseEntity.ok(getResponseData(true, "获取成功！", iGoodInfoService.selectById(1)));
     }
 
 }

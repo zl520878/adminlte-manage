@@ -19,7 +19,7 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<%=request.getContextPath()%>/dist/css/skins/all-skins.min.css">
     <!--bootstrap上传图片-->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/fileinput/css/fileinput.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/fileinput/css/fileinput.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap/css/bootstrapValidator.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -79,7 +79,7 @@
 <script src="<%=request.getContextPath()%>/dist/js/demo.js"></script>
 <!--tabs-->
 <script src="<%=request.getContextPath()%>/dist/js/app_iframe.js"></script>
-<script src="<%=request.getContextPath()%>/bootstrap/fileinput/js/fileinput.min.js"></script>
+<script src="<%=request.getContextPath()%>/bootstrap/fileinput/js/fileinput.js"></script>
 <script src="<%=request.getContextPath()%>/bootstrap/fileinput/js/locales/zh.js"></script>
 </body>
 </html>
